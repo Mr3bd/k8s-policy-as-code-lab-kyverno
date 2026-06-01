@@ -5,14 +5,17 @@ metadata:
 spec:
   validationFailureAction: Enforce
   rules:
-    - name: hostnetwork
+    - name: block-hostnetwork-true
       match:
         any:
         - resources:
             kinds:
               - Pod
       validate:
-        message: "HostNetwork is not allowed"
-        pattern:
-          spec:
-            hostNetwork: false
+        message: "HostNetwork must not be enabled"
+        deny:
+          conditions:
+            any:
+              - key: "{{ request.object.spec.hostNetwork || false }}"
+                operator: Equals
+                value: true

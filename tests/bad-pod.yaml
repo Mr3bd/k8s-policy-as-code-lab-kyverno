@@ -1,10 +1,15 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: bad-pod
+  name: bad-hostpath
 spec:
+  hostNetwork: true
   containers:
     - name: nginx
       image: nginx
       securityContext:
         privileged: true
+  volumes:
+    - name: test
+      hostPath:
+        path: /etc

@@ -5,7 +5,7 @@ metadata:
 spec:
   validationFailureAction: Enforce
   rules:
-    - name: hostpath
+    - name: block-hostpath
       match:
         any:
         - resources:
@@ -13,8 +13,8 @@ spec:
               - Pod
       validate:
         message: "hostPath volumes are not allowed"
-        deny:
-          conditions:
-            any:
-              - key: "{{ request.object.spec.volumes[].hostPath }}"
-                operator: Exists
+        pattern:
+          spec:
+            volumes:
+              - name: "?*"
+                =(hostPath): "null"

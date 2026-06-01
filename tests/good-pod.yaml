@@ -5,18 +5,23 @@ metadata:
 spec:
   securityContext:
     runAsNonRoot: true
+
   containers:
     - name: nginx
       image: docker.io/nginx
+
+      securityContext:
+        privileged: false
+        capabilities:
+          drop:
+            - ALL
+
       resources:
         limits:
           memory: "128Mi"
           cpu: "100m"
+
       readinessProbe:
         httpGet:
           path: /
           port: 80
-      securityContext:
-        capabilities:
-          drop:
-            - ALL
