@@ -1,0 +1,21 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-readiness-probe
+spec:
+  validationFailureAction: Enforce
+  rules:
+    - name: probe
+      match:
+        any:
+        - resources:
+            kinds:
+              - Pod
+      validate:
+        message: "Readiness probe is required"
+        pattern:
+          spec:
+            containers:
+              - readinessProbe:
+                  httpGet:
+                    path: "?*"

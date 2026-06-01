@@ -1,0 +1,19 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: restrict-registries
+spec:
+  validationFailureAction: Enforce
+  rules:
+    - name: registries
+      match:
+        any:
+        - resources:
+            kinds:
+              - Pod
+      validate:
+        message: "Only approved registries allowed"
+        pattern:
+          spec:
+            containers:
+              - image: "docker.io/* | ghcr.io/*"
