@@ -202,4 +202,4 @@ Made with 💻 by a Cloud Security Engineer, for Cloud Security Engineers.
 
 https://mr3bd.com
 
-Made with ❤️ using Kubernetes, k8s, Kyverno, minikube
+Made with ❤️ using Kubernetes, k8s, Kyverno, Minikube, Helm
